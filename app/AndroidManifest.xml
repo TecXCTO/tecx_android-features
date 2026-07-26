@@ -1,17 +1,28 @@
+<!-- Permission to start service automatically when phone turns on -->
+<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 <!-- Notification permission for Android 13+ -->
 <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
-
 <!-- Foreground Service permissions -->
 <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
 
 <application ...>
-    
-    <!-- Register the Foreground Service -->
+
+    <!-- Foreground Service -->
     <service
         android:name=".BatteryMonitorService"
         android:foregroundServiceType="specialUse"
         android:enabled="true"
         android:exported="false" />
+
+    <!-- BroadcastReceiver for Boot Detection -->
+    <receiver
+        android:name=".BootReceiver"
+        android:enabled="true"
+        android:exported="false">
+        <intent-filter>
+            <action android:name="android.intent.action.BOOT_COMPLETED" />
+        </intent-filter>
+    </receiver>
 
 </application>
