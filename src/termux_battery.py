@@ -58,7 +58,7 @@ def main():
         print("[Error] Please enter integer digits only.")
         sys.exit(1)
 
-    print(\n[System] Initialization successful.")
+    print("\n[System] Initialization successful.")
     print(f"-> Critical Low Monitoring Bound: <= {low_limit}%")
     print(f"-> Safe Tracking Increments Zone: {low_limit + 1}% to {high_limit - 1}%")
     print(f"-> Critical High Monitoring Bound: >= {high_limit}%")
