@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://android.com"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Battery Monitor Settings"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="24dp"/>
+
+    <!-- Service Toggle Switch -->
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:id="@+id/switchService"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enable Battery Monitoring"
+        android:textSize="18sp"
+        android:layout_marginBottom="32dp"/>
+
+    <!-- Low Limit Input -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Low Battery Limit (Plug In %):"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/etLowLimit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:text="20"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- High Limit Input -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="High Battery Limit (Unplug %):"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/etHighLimit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:text="80"
+        android:layout_marginBottom="24dp"/>
+
+    <!-- Save Settings Button -->
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save Limits" />
+
+</LinearLayout>
