@@ -1,4 +1,4 @@
-package com.example.batterymonitor // Change to your actual package name
+package com.example.batterymonitor
 
 import android.app.*
 import android.content.BroadcastReceiver
@@ -15,13 +15,10 @@ class BatteryMonitorService : Service() {
 
     private val CHANNEL_ID = "battery_monitor_service_channel"
     private val ALERT_CHANNEL_ID = "battery_alerts_channel"
-    private val LOW_THRESHOLD = 20
-    private val HIGH_THRESHOLD = 80
 
     private var lowAlertTriggered = false
     private var highAlertTriggered = false
 
-    // Dynamic BroadcastReceiver running inside the service
     private val batteryReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             if (intent.action == Intent.ACTION_BATTERY_CHANGED) {
@@ -33,16 +30,21 @@ class BatteryMonitorService : Service() {
                 val isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING || 
                                  status == BatteryManager.BATTERY_STATUS_FULL
 
-                // Case 1: Low battery & discharging
-                if (pct <= LOW_THRESHOLD && !isCharging) {
+                // DYNAMIC FETCH: Pull updated limits configured by user in the UI
+                val sharedPrefs = context.getSharedPreferences("BatteryMonitorPrefs", Context.MODE_PRIVATE)
+                val lowThreshold = sharedPrefs.getInt("low_limit", 20)
+                val highThreshold = sharedPrefs.getInt("high_limit", 80)
+
+                // Condition 1: Low Battery Alert
+                if (pct <= lowThreshold && !isCharging) {
                     if (!lowAlertTriggered) {
                         triggerAlarmNotification(context, "🔋 Battery Critical!", "Level is $pct%. Plug in your charger!")
                         lowAlertTriggered = true
                     }
                 } else { lowAlertTriggered = false }
 
-                // Case 2: High battery & charging
-                if (pct >= HIGH_THRESHOLD && isCharging) {
+                // Condition 2: High Battery Alert
+                if (pct >= highThreshold && isCharging) {
                     if (!highAlertTriggered) {
                         triggerAlarmNotification(context, "⚡ Fully Charged!", "Level is $pct%. Unplug your charger!")
                         highAlertTriggered = true
@@ -56,10 +58,9 @@ class BatteryMonitorService : Service() {
         super.onCreate()
         createNotificationChannels()
         
-        // Start foreground immediately to comply with Android OS rules
         val statusNotification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("Battery Monitor Active")
-            .setContentText("Monitoring battery percentages in the background.")
+            .setContentText("Monitoring custom limits in background.")
             .setSmallIcon(android.R.drawable.ic_dialog_info)
             .setPriority(NotificationCompat.PRIORITY_LOW)
             .setOngoing(true)
@@ -67,7 +68,6 @@ class BatteryMonitorService : Service() {
 
         startForeground(1, statusNotification)
 
-        // Register receiver inside the persistent service
         val filter = IntentFilter(Intent.ACTION_BATTERY_CHANGED)
         registerReceiver(batteryReceiver, filter)
     }
@@ -91,26 +91,17 @@ class BatteryMonitorService : Service() {
     private fun createNotificationChannels() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            
-            // Channel for the persistent running service
             val serviceChannel = NotificationChannel(CHANNEL_ID, "Background Service", NotificationManager.IMPORTANCE_LOW)
-            
-            // Channel for the actual loud alarms
             val alertChannel = NotificationChannel(ALERT_CHANNEL_ID, "Battery Alarm Alerts", NotificationManager.IMPORTANCE_HIGH)
-            
             manager.createNotificationChannel(serviceChannel)
             manager.createNotificationChannel(alertChannel)
         }
     }
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        return START_STICKY // Tells OS to recreate service if it gets killed
-    }
-
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int = START_STICKY
     override fun onDestroy() {
         super.onDestroy()
-        unregisterReceiver(batteryReceiver) // Prevent memory leaks
+        unregisterReceiver(batteryReceiver)
     }
-
     override fun onBind(intent: Intent?): IBinder? = null
 }
