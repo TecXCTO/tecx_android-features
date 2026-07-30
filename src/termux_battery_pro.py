@@ -115,14 +115,16 @@ def main():
             # === ZONE 1: CRITICAL LOW RANGE BOUNDARY (Alarm + Vibrate) ===
             if level <= low_limit and not is_charging:
                 high_alarm_active = False
-                msg = f"Warning. Battery level dropped to {level} percent at {time.strftime('%H:%M:%S')}. Please plug in your charger."
+                # msg = f"Warning. Battery level dropped to {level} percent at {time.strftime('%H:%M:%S')}. Please plug in your charger."
+                msg = f"Warning. Battery level dropped to {level} percent. Please plug in your charger."
                 trigger_critical_alarm("🚨 Plug In Charger!", msg)
                 low_alarm_active = True
 
             # === ZONE 2: CRITICAL HIGH RANGE BOUNDARY (Alarm + Vibrate) ===
             elif level >= high_limit and is_charging:
                 low_alarm_active = False
-                msg = f"Alert. Battery level reached {level} percent at {time.strftime('%H:%M:%S')}. Please unplug your charger."
+                # msg = f"Alert. Battery level reached {level} percent at {time.strftime('%H:%M:%S')}. Please unplug your charger."
+                msg = f"Alert. Battery level reached {level} percent. Please unplug your charger."
                 trigger_critical_alarm("🚨 Unplug Charger!", msg)
                 high_alarm_active = True
 
