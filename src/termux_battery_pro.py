@@ -137,7 +137,9 @@ def main():
                 # Handle granular notifications inside your dynamic mid-tier spectrum (e.g. 71% to 70%)
                 if level != last_notified_percentage:
                     trigger_silent_update(level)
-                    print(f"[Update] Spoken Alert Fired: Battery level is {level}% at {time.strftime('%H:%M:%S')} ")
+                    # print(f"[Update] Spoken Alert Fired: Battery level is {level}%")
+                    # print(f"[Update] Spoken Alert Fired: Battery level is {level}% at {time.strftime('%H:%M:%S')} ")
+                    print(f"[Update] Spoken Alert Fired: Battery level is {level}% at {time.strftime('%H:%M:%S')} ", flush=True)
                     last_notified_percentage = level
 
             # Speed up loops if alarms are active to repeat vibration effectively, otherwise save resources
@@ -155,3 +157,6 @@ def main():
 if __name__ == "__main__":
     main()
           
+# python src/termux_battery_pro.py
+# python -u src/termux_battery_pro.py
+
