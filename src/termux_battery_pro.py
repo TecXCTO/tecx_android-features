@@ -141,7 +141,8 @@ def main():
                     trigger_silent_update(level)
                     # print(f"[Update] Spoken Alert Fired: Battery level is {level}%")
                     # print(f"[Update] Spoken Alert Fired: Battery level is {level}% at {time.strftime('%H:%M:%S')} ")
-                    print(f"[Update] Spoken Alert Fired: Battery level is {level}% at {time.strftime('%H:%M:%S')} ", flush=True)
+                    # print(f"[Update] Spoken Alert Fired: Battery level is {level}% at {time.strftime('%H:%M:%S')} ", flush=True)
+                    print(f"[Update] Spoken Alert Fired: Battery level is {level}% at {time.strftime('%H:%M:%S')} ")
                     last_notified_percentage = level
 
             # Speed up loops if alarms are active to repeat vibration effectively, otherwise save resources
