@@ -117,6 +117,8 @@ def main():
                 high_alarm_active = False
                 # msg = f"Warning. Battery level dropped to {level} percent at {time.strftime('%H:%M:%S')}. Please plug in your charger."
                 msg = f"Warning. Battery level dropped to {level} percent. Please plug in your charger."
+                # ADD THIS LINE TO PRINT IN THE TERMINAL INSTANTLY:
+                print(f"[CRITICAL LOW] Battery level dropped to {level} percent at {time.strftime('%H:%M:%S')}.", flush=True)
                 trigger_critical_alarm("🚨 Plug In Charger!", msg)
                 low_alarm_active = True
 
@@ -125,6 +127,9 @@ def main():
                 low_alarm_active = False
                 # msg = f"Alert. Battery level reached {level} percent at {time.strftime('%H:%M:%S')}. Please unplug your charger."
                 msg = f"Alert. Battery level reached {level} percent. Please unplug your charger."
+                
+                # ADD THIS LINE TO PRINT IN THE TERMINAL INSTANTLY:
+                print(f"[CRITICAL HIGH] Battery level reached {level} percent at {time.strftime('%H:%M:%S')}.", flush=True)
                 trigger_critical_alarm("🚨 Unplug Charger!", msg)
                 high_alarm_active = True
 
