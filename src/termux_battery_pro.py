@@ -65,7 +65,7 @@ def clear_critical_alarm():
 
 def main():
     print("=" * 45)
-    print("   TERMUX CUSTOM RECONFIGURABLE BATTERY PRO    ")
+    print("   TecX CUSTOM RECONFIGURABLE BATTERY PRO    ")
     print("=" * 45)
 
     # --- USER DYNAMIC LEVEL CONFIGURATION RANGE INPUTS ---
