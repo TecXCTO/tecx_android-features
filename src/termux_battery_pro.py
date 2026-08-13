@@ -1,3 +1,6 @@
+# pkg update && pkg upgrade -y
+# pkg install termux-api -y
+
 import subprocess
 import json
 import time
