@@ -1,0 +1,26 @@
+import asyncio
+
+from google import genai
+
+
+client = genai.Client(api_key="YOUR_API_KEY")
+
+ 
+
+model = "gemini-3.1-flash-live-preview"
+
+config = {"response_modalities": ["AUDIO"]}
+
+
+async def main():
+
+    async with client.aio.live.connect(model=model, config=config) as session:
+
+        print("Session started")
+
+        # Send content...
+
+
+if __name__ == "__main__":
+
+    asyncio.run(main())
