@@ -23,7 +23,7 @@ class OptionsSpreadResearcher:
         if api_key:
             self.client = genai.Client(api_key=api_key)
             # UPGRADED: Swapped retired 'gemini-2.5-flash' for 'gemini-3.5-flash'
-            self.model_name = 'gemini-3.5-flash'
+            self.model_name = 'gemini-3.7-flash'
         else:
             self.client = None
             self.model_name = None
