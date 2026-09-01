@@ -46,7 +46,11 @@ async def main():
 
         # 2. Keep the live session open and send a text prompt to kick things off
         print("Sending initial prompt...")
-        await session.send(input="Hello Gemini! Please say something back to me.", end_of_turn=True)
+        # await session.send(input="Hello Gemini! Please say something back to me.", end_of_turn=True)
+        # Old broken method
+        # await session.send(input="Hello Gemini!...", end_of_turn=True)
+        # New correct method
+        await session.send_client_content(input="Hello Gemini! Please say something back to me.", end_of_turn=True)
 
         # Keep the session open for 15 seconds to give Gemini time to stream audio back
         await asyncio.sleep(15)
